@@ -21,8 +21,8 @@ const href = projectPath(locale, data.slug);
 const Heading = headingLevel;
 ---
 
-<article class:list={['project-preview', `variant-${layout}`]}>
-  <a href={href} class="cover-link" tabindex="-1" aria-hidden="true">
+<article class:list={['project-preview', `variant-${layout}`]} data-reveal>
+  <a href={href} class="cover-link" tabindex="-1" aria-hidden="true" data-parallax="0.04">
     <img
       src={data.cover}
       alt={data.coverAlt}

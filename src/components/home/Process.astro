@@ -10,22 +10,46 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 
 const steps = [
-  { number: '01', title: t('process.1.title'), text: t('process.1.text') },
-  { number: '02', title: t('process.2.title'), text: t('process.2.text') },
-  { number: '03', title: t('process.3.title'), text: t('process.3.text') },
+  {
+    number: '01',
+    title: t('process.1.title'),
+    text: t('process.1.text'),
+    bullets: [t('process.1.b1'), t('process.1.b2'), t('process.1.b3')],
+  },
+  {
+    number: '02',
+    title: t('process.2.title'),
+    text: t('process.2.text'),
+    bullets: [t('process.2.b1'), t('process.2.b2'), t('process.2.b3')],
+  },
+  {
+    number: '03',
+    title: t('process.3.title'),
+    text: t('process.3.text'),
+    bullets: [t('process.3.b1'), t('process.3.b2'), t('process.3.b3')],
+  },
 ];
 ---
 
 <section class="section process-section">
   <div class="container">
-    <h2>{t('process.title')}</h2>
-    <ol class="process-list">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">{t('process.eyebrow')}</p>
+      <h2>{t('process.title')}</h2>
+    </header>
+
+    <ol class="process-grid" data-reveal-group>
       {
         steps.map((step) => (
-          <li class="process-step">
+          <li class="card process-card" data-reveal>
             <span class="section-number">{step.number}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
+            <ul class="card-bullets">
+              {step.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
           </li>
         ))
       }
@@ -38,34 +62,28 @@ const steps = [
     border-top: 1px solid var(--color-border-soft);
   }
 
-  h2 {
+  .section-head {
+    display: grid;
+    gap: var(--space-3);
     margin-bottom: var(--space-7);
   }
 
-  .process-list {
+  .process-grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-7);
+    gap: var(--space-5);
   }
 
-  .process-step {
-    display: grid;
-    gap: var(--space-3);
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .process-step p {
+  .process-card p {
     color: var(--color-text-muted);
     max-width: 40ch;
   }
 
   @media (min-width: 768px) {
-    .process-list {
+    .process-grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
     }
   }
 </style>

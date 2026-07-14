@@ -8,21 +8,33 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+// Última palabra del H1 con gradiente de marca (acento editorial puntual)
+const title = t('hero.title');
+const lastSpace = title.lastIndexOf(' ');
+const titleStart = title.slice(0, lastSpace);
+const titleEnd = title.slice(lastSpace + 1);
 ---
 
 <section class="hero tech-grid-bg">
+  <div class="deco deco-blob hero-blob" data-parallax="0.22" aria-hidden="true"></div>
+  <div class="deco deco-diagonal hero-diag-1" data-parallax="0.14" aria-hidden="true"></div>
+  <div class="deco deco-diagonal hero-diag-2" data-parallax="0.09" aria-hidden="true"></div>
+
   <div class="container hero-inner">
-    <div class="hero-copy reveal">
-      <p class="eyebrow">{t('hero.eyebrow')}</p>
-      <h1>{t('hero.title')}</h1>
-      <p class="lead">{t('hero.text')}</p>
-      <div class="hero-actions">
+    <div class="hero-copy" data-reveal-group>
+      <p class="eyebrow" data-reveal>{t('hero.eyebrow')}</p>
+      <h1 data-reveal>
+        {titleStart}{' '}<span class="grad-text">{titleEnd}</span>
+      </h1>
+      <p class="lead" data-reveal>{t('hero.text')}</p>
+      <div class="hero-actions" data-reveal>
         <a href={projectsPath(locale)} class="btn btn-primary">{t('cta.explore')}</a>
         <a href={contactPath(locale)} class="btn btn-secondary">{t('cta.talk')}</a>
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
+    <div class="hero-visual" data-parallax="0.07" aria-hidden="true">
       <!-- Geometría derivada del logo: diagonales M·A·I -->
       <svg viewBox="0 0 400 400" width="380" height="380" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -43,12 +55,31 @@ const t = useTranslations(locale);
 
 <style>
   .hero {
+    position: relative;
     padding-block: clamp(var(--space-8), 12vw, var(--space-10));
     border-bottom: 1px solid var(--color-border-soft);
     overflow: clip;
   }
 
+  .hero-blob {
+    top: -10%;
+    right: -8%;
+  }
+
+  .hero-diag-1 {
+    top: 18%;
+    right: 30%;
+  }
+
+  .hero-diag-2 {
+    bottom: 12%;
+    left: -60px;
+    opacity: 0.12;
+  }
+
   .hero-inner {
+    position: relative;
+    z-index: var(--z-raised);
     display: grid;
     gap: var(--space-7);
     align-items: center;
@@ -88,6 +119,7 @@ const t = useTranslations(locale);
       display: block;
       max-width: 380px;
       justify-self: end;
+      filter: drop-shadow(0 24px 48px rgba(11, 18, 32, 0.18));
     }
   }
 </style>

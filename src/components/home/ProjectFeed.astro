@@ -15,8 +15,11 @@ const t = useTranslations(locale);
 
 <section class="section">
   <div class="container">
-    <div class="feed-head">
-      <h2>{t('feed.title')}</h2>
+    <div class="feed-head" data-reveal>
+      <div>
+        <p class="eyebrow">{t('feed.eyebrow')}</p>
+        <h2>{t('feed.title')}</h2>
+      </div>
       <a href={projectsPath(locale)} class="link-editorial">{t('feed.all')}</a>
     </div>
 

@@ -243,22 +243,136 @@ button {
   mask-image: linear-gradient(to bottom, black 60%, transparent);
 }
 
-/* --- Animación de entrada discreta --- */
+/* --- Reveals al hacer scroll (script motion.ts) --- */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
-    animation: reveal var(--duration-slow) var(--ease-standard) both;
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 620ms var(--ease-standard),
+      transform 620ms var(--ease-standard);
   }
 
-  @keyframes reveal {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
   }
+}
+
+/* --- Parallax (script motion.ts fija --parallax-y) --- */
+[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
+/* --- Capas decorativas parallax --- */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: var(--z-base);
+}
+
+.deco-blob {
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 130, 251, 0.14),
+    rgba(98, 66, 252, 0.08) 55%,
+    transparent 72%
+  );
+  filter: blur(2px);
+}
+
+.deco-diagonal {
+  width: 220px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand);
+  opacity: 0.18;
+  transform-origin: center;
+  rotate: -32deg;
+}
+
+/* --- Texto con gradiente de marca (uso editorial puntual) --- */
+.grad-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Tarjetas --- */
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: var(--gradient-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+}
+
+.card-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.card-bullets li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.card-bullets li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--gradient-brand);
+  transform: rotate(45deg) translateY(-1px);
 }
 
 /* --- Reduced motion global (spec §9.5) --- */

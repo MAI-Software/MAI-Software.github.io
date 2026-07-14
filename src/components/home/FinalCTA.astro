@@ -11,9 +11,10 @@ const t = useTranslations(locale);
 ---
 
 <section class="section final-cta on-dark">
-  <div class="container final-inner">
-    <h2>{t('final.title')}</h2>
-    <a href={contactPath(locale)} class="btn btn-inverse">{t('cta.contact')}</a>
+  <div class="deco deco-blob final-blob" data-parallax="0.16" aria-hidden="true"></div>
+  <div class="container final-inner" data-reveal-group>
+    <h2 data-reveal>{t('final.title')}</h2>
+    <a href={contactPath(locale)} class="btn btn-inverse" data-reveal>{t('cta.contact')}</a>
   </div>
 </section>
 
@@ -24,22 +25,17 @@ const t = useTranslations(locale);
     overflow: clip;
   }
 
-  /* Halo de marca muy discreto (spec §8.2) */
-  .final-cta::after {
-    content: '';
-    position: absolute;
+  /* Halo de marca discreto (spec §8.2) con parallax */
+  .final-blob {
     right: -10%;
     top: -40%;
-    width: 480px;
-    height: 480px;
-    border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(56, 130, 251, 0.16),
-      rgba(98, 66, 252, 0.08) 55%,
+      rgba(56, 130, 251, 0.2),
+      rgba(98, 66, 252, 0.1) 55%,
       transparent 75%
     );
-    pointer-events: none;
+    filter: none;
   }
 
   .final-inner {

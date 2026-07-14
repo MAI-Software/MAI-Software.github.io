@@ -2,6 +2,7 @@
 import type { Locale } from '../../data/company';
 import { categories } from '../../data/categories';
 import { useTranslations } from '../../i18n/utils';
+import type { UIKey } from '../../i18n/ui';
 
 interface Props {
   locale: Locale;
@@ -9,23 +10,32 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+const bulletKeys = (id: string): UIKey[] =>
+  [`category.${id}.b1`, `category.${id}.b2`, `category.${id}.b3`] as UIKey[];
 ---
 
 <section class="section">
   <div class="container">
-    <h2>{t('categories.title')}</h2>
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">{t('categories.eyebrow')}</p>
+      <h2>{t('categories.title')}</h2>
+    </header>
 
-    <ol class="category-list">
+    <ol class="category-grid" data-reveal-group>
       {
         categories.map((cat) => (
-          <li>
-            <a href={cat.path[locale]} class="category-row">
-              <span class="section-number">{cat.number}</span>
-              <span class="category-name">{cat.label[locale]}</span>
-              <span class="category-desc">{cat.description[locale]}</span>
-              <span class="category-arrow" aria-hidden="true">
-                →
-              </span>
+          <li class="card category-card" data-reveal>
+            <span class="section-number">{cat.number}</span>
+            <h3>{cat.label[locale]}</h3>
+            <p class="category-desc">{cat.description[locale]}</p>
+            <ul class="card-bullets">
+              {bulletKeys(cat.id).map((key) => (
+                <li>{t(key)}</li>
+              ))}
+            </ul>
+            <a href={cat.path[locale]} class="link-editorial category-link">
+              {t('categories.cta')}
             </a>
           </li>
         ))
@@ -35,85 +45,40 @@ const t = useTranslations(locale);
 </section>
 
 <style>
-  h2 {
+  .section-head {
+    display: grid;
+    gap: var(--space-3);
     margin-bottom: var(--space-7);
+  }
+
+  .section-head h2 {
     max-width: 22ch;
   }
 
-  .category-list {
+  .category-grid {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .category-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas:
-      'num name arrow'
-      'num desc arrow';
-    column-gap: var(--space-5);
-    row-gap: var(--space-2);
-    align-items: center;
-    padding: var(--space-6) var(--space-2);
-    border-bottom: 1px solid var(--color-border);
-    text-decoration: none;
-    position: relative;
-    transition: background-color var(--duration-base) var(--ease-standard);
+    gap: var(--space-5);
   }
 
-  .category-row::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    height: 2px;
-    width: 0;
-    background: var(--gradient-brand);
-    transition: width var(--duration-slow) var(--ease-standard);
-  }
-
-  .category-row:hover::before {
-    width: 100%;
-  }
-
-  .category-row:hover {
-    background: var(--color-surface-soft);
-  }
-
-  .section-number {
-    grid-area: num;
-    align-self: start;
-    padding-top: var(--space-1);
-  }
-
-  .category-name {
-    grid-area: name;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-    color: var(--color-ink-900);
-    line-height: 1.1;
+  .category-card h3 {
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
   }
 
   .category-desc {
-    grid-area: desc;
     color: var(--color-text-muted);
-    max-width: 52ch;
   }
 
-  .category-arrow {
-    grid-area: arrow;
-    font-size: var(--font-size-2xl);
-    color: var(--color-text-soft);
-    transition:
-      transform var(--duration-base) var(--ease-standard),
-      color var(--duration-base) var(--ease-standard);
+  .category-link {
+    margin-top: var(--space-2);
+    justify-self: start;
   }
 
-  .category-row:hover .category-arrow {
-    transform: translateX(6px);
-    color: var(--color-violet);
+  @media (min-width: 768px) {
+    .category-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 </style>

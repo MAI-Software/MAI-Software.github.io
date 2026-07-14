@@ -12,11 +12,11 @@ const studioHref = locale === 'es' ? '/estudio' : '/en/studio';
 ---
 
 <section class="section studio-section">
-  <div class="container studio-inner">
-    <span class="brand-rule" aria-hidden="true"></span>
-    <h2>{t('studio.title')}</h2>
-    <p class="lead">{t('studio.text')}</p>
-    <a href={studioHref} class="link-editorial">{t('studio.link')}</a>
+  <div class="container studio-inner" data-reveal-group>
+    <span class="brand-rule" aria-hidden="true" data-reveal></span>
+    <h2 data-reveal>{t('studio.title')}</h2>
+    <p class="lead" data-reveal>{t('studio.text')}</p>
+    <a href={studioHref} class="link-editorial" data-reveal>{t('studio.link')}</a>
   </div>
 </section>
 

@@ -23,21 +23,44 @@ export const ui = {
     'cta.viewProject': 'Ver proyecto',
     'cta.openDemo': 'Abrir demo',
 
+    'categories.eyebrow': 'Qué hacemos',
     'categories.title': 'Tres disciplinas. Una misma forma de construir.',
+    'categories.cta': 'Ver proyectos',
+    'category.game.b1': 'Prototipos jugables desde el inicio',
+    'category.game.b2': 'La mecánica como núcleo del diseño',
+    'category.game.b3': 'Experiencias para móvil y web',
+    'category.saas.b1': 'Interfaces claras y funcionales',
+    'category.saas.b2': 'Automatización de procesos',
+    'category.saas.b3': 'Bases preparadas para escalar',
+    'category.web.b1': 'Diseño editorial a medida',
+    'category.web.b2': 'Rendimiento y SEO cuidados',
+    'category.web.b3': 'Fáciles de mantener y ampliar',
+
     'featured.label': 'Proyecto destacado',
+    'feed.eyebrow': 'Trabajo reciente',
     'feed.title': 'Últimos proyectos',
     'feed.all': 'Ver todos los proyectos',
 
+    'process.eyebrow': 'Cómo trabajamos',
     'process.title': 'Forma de trabajar',
     'process.1.title': 'Idea',
     'process.1.text':
       'Definimos el problema, la oportunidad y el resultado que debe conseguir el producto.',
+    'process.1.b1': 'Problema y oportunidad',
+    'process.1.b2': 'Resultado esperado',
+    'process.1.b3': 'Alcance de la primera versión',
     'process.2.title': 'Diseño y desarrollo',
     'process.2.text':
       'Construimos una experiencia clara, funcional y visualmente sólida.',
+    'process.2.b1': 'Sistema visual y UX',
+    'process.2.b2': 'Desarrollo iterativo',
+    'process.2.b3': 'Revisión continua',
     'process.3.title': 'Lanzamiento e iteración',
     'process.3.text':
       'Publicamos, medimos y mejoramos con una base preparada para evolucionar.',
+    'process.3.b1': 'Publicación y medición',
+    'process.3.b2': 'Mejora tras el lanzamiento',
+    'process.3.b3': 'Base lista para crecer',
 
     'studio.title': 'Construimos producto, no solo pantallas.',
     'studio.text':
@@ -113,21 +136,44 @@ export const ui = {
     'cta.viewProject': 'View project',
     'cta.openDemo': 'Open demo',
 
+    'categories.eyebrow': 'What we do',
     'categories.title': 'Three disciplines. One way of building.',
+    'categories.cta': 'View projects',
+    'category.game.b1': 'Playable prototypes from day one',
+    'category.game.b2': 'Mechanics at the core of the design',
+    'category.game.b3': 'Experiences for mobile and web',
+    'category.saas.b1': 'Clear, functional interfaces',
+    'category.saas.b2': 'Process automation',
+    'category.saas.b3': 'Foundations built to scale',
+    'category.web.b1': 'Tailored editorial design',
+    'category.web.b2': 'Careful performance and SEO',
+    'category.web.b3': 'Easy to maintain and extend',
+
     'featured.label': 'Featured project',
+    'feed.eyebrow': 'Recent work',
     'feed.title': 'Latest projects',
     'feed.all': 'View all projects',
 
+    'process.eyebrow': 'How we work',
     'process.title': 'How we work',
     'process.1.title': 'Idea',
     'process.1.text':
       'We define the problem, the opportunity and the outcome the product must achieve.',
+    'process.1.b1': 'Problem and opportunity',
+    'process.1.b2': 'Expected outcome',
+    'process.1.b3': 'Scope of the first version',
     'process.2.title': 'Design & development',
     'process.2.text':
       'We build a clear, functional and visually solid experience.',
+    'process.2.b1': 'Visual system and UX',
+    'process.2.b2': 'Iterative development',
+    'process.2.b3': 'Continuous review',
     'process.3.title': 'Launch & iteration',
     'process.3.text':
       'We ship, measure and improve on a foundation built to evolve.',
+    'process.3.b1': 'Ship and measure',
+    'process.3.b2': 'Improve after launch',
+    'process.3.b3': 'A base ready to grow',
 
     'studio.title': 'We build product, not just screens.',
     'studio.text':
