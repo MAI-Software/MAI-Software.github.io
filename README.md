@@ -4,7 +4,7 @@ Web corporativa y portfolio editorial de **MAI Softwares**: videojuegos, SaaS y 
 
 - Stack: **Astro + TypeScript + CSS** (estático, sin backend)
 - Idiomas: **ES** (por defecto, `/`) y **EN** (`/en/`)
-- Despliegue objetivo: **Cloudflare Pages** (build: `npm run build`, output: `dist/`)
+- En producción: **https://mai-software.github.io** — GitHub Pages, deploy automático con cada push a `main` (GitHub Actions)
 
 ## Comandos
 
@@ -27,6 +27,6 @@ Web corporativa y portfolio editorial de **MAI Softwares**: videojuegos, SaaS y 
 ## Pendiente de contenido real
 
 - Email de contacto y redes en `src/data/company.ts`.
-- Dominio definitivo en `astro.config.mjs` y `public/robots.txt`.
+- Dominio propio (opcional): configurar en Pages y actualizar `astro.config.mjs` y `public/robots.txt`.
 - Datos legales cuando exista constitución (`/legal`).
 - Sustituir los 3 proyectos de ejemplo por proyectos reales.
