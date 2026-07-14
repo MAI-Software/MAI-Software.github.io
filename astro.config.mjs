@@ -2,9 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// PENDIENTE: sustituir por el dominio definitivo cuando exista.
-// URL provisional basada en el nombre del proyecto en Cloudflare Pages.
-const SITE_URL = 'https://mai-softwares-web.pages.dev';
+// Sitio raíz de usuario en GitHub Pages. Sustituir si llega dominio propio.
+const SITE_URL = 'https://mai-software.github.io';
 
 export default defineConfig({
   site: SITE_URL,
