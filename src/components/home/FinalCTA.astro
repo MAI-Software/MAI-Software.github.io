@@ -1,0 +1,56 @@
+---
+import type { Locale } from '../../data/company';
+import { useTranslations, contactPath } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="section final-cta on-dark">
+  <div class="container final-inner">
+    <h2>{t('final.title')}</h2>
+    <a href={contactPath(locale)} class="btn btn-inverse">{t('cta.contact')}</a>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    background: var(--color-surface-dark);
+    position: relative;
+    overflow: clip;
+  }
+
+  /* Halo de marca muy discreto (spec §8.2) */
+  .final-cta::after {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -40%;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(56, 130, 251, 0.16),
+      rgba(98, 66, 252, 0.08) 55%,
+      transparent 75%
+    );
+    pointer-events: none;
+  }
+
+  .final-inner {
+    display: grid;
+    gap: var(--space-6);
+    justify-items: start;
+    position: relative;
+    z-index: var(--z-raised);
+  }
+
+  .final-inner h2 {
+    max-width: 22ch;
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../data/company';
+import { useTranslations, projectPath } from '../../i18n/utils';
+
+interface Props {
+  prev: CollectionEntry<'projects'> | null;
+  next: CollectionEntry<'projects'> | null;
+  locale: Locale;
+}
+
+const { prev, next, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{
+  (prev || next) && (
+    <nav class="project-nav" aria-label={`${t('projects.prev')} / ${t('projects.next')}`}>
+      {prev ? (
+        <a href={projectPath(locale, prev.data.slug)} class="nav-card nav-prev">
+          <span class="meta">← {t('projects.prev')}</span>
+          <span class="nav-title">{prev.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a href={projectPath(locale, next.data.slug)} class="nav-card nav-next">
+          <span class="meta">{t('projects.next')} →</span>
+          <span class="nav-title">{next.data.title}</span>
+        </a>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .project-nav {
+    display: grid;
+    gap: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+
+  .nav-card {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      background-color var(--duration-base) var(--ease-standard);
+  }
+
+  .nav-card:hover {
+    border-color: var(--color-violet);
+    background: var(--color-surface-soft);
+  }
+
+  .nav-next {
+    text-align: right;
+    justify-items: end;
+  }
+
+  .nav-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink-900);
+  }
+
+  @media (min-width: 600px) {
+    .project-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

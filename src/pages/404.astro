@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../data/company';
+import { useTranslations } from '../i18n/utils';
+
+// 404 compartida: Cloudflare Pages sirve /404.html para cualquier ruta no encontrada.
+const locale = 'es';
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`404 — ${company.name}`}
+  description={t('notfound.text')}
+  hideContactCta
+>
+  <section class="section tech-grid-bg">
+    <div class="container notfound">
+      <p class="notfound-code" aria-hidden="true">404</p>
+      <h1>{t('notfound.title')}</h1>
+      <p class="lead">{t('notfound.text')}</p>
+      <a href="/" class="btn btn-primary">{t('notfound.back')}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    min-height: 55vh;
+    align-content: center;
+  }
+
+  .notfound-code {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(var(--font-size-5xl), 10vw, var(--font-size-6xl));
+    line-height: 1;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+</style>

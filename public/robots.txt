@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mai-softwares-web.pages.dev/sitemap-index.xml

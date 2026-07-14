@@ -1,0 +1,119 @@
+---
+import type { Locale } from '../../data/company';
+import { categories } from '../../data/categories';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="section">
+  <div class="container">
+    <h2>{t('categories.title')}</h2>
+
+    <ol class="category-list">
+      {
+        categories.map((cat) => (
+          <li>
+            <a href={cat.path[locale]} class="category-row">
+              <span class="section-number">{cat.number}</span>
+              <span class="category-name">{cat.label[locale]}</span>
+              <span class="category-desc">{cat.description[locale]}</span>
+              <span class="category-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  h2 {
+    margin-bottom: var(--space-7);
+    max-width: 22ch;
+  }
+
+  .category-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .category-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'num name arrow'
+      'num desc arrow';
+    column-gap: var(--space-5);
+    row-gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-6) var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    position: relative;
+    transition: background-color var(--duration-base) var(--ease-standard);
+  }
+
+  .category-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--gradient-brand);
+    transition: width var(--duration-slow) var(--ease-standard);
+  }
+
+  .category-row:hover::before {
+    width: 100%;
+  }
+
+  .category-row:hover {
+    background: var(--color-surface-soft);
+  }
+
+  .section-number {
+    grid-area: num;
+    align-self: start;
+    padding-top: var(--space-1);
+  }
+
+  .category-name {
+    grid-area: name;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+    color: var(--color-ink-900);
+    line-height: 1.1;
+  }
+
+  .category-desc {
+    grid-area: desc;
+    color: var(--color-text-muted);
+    max-width: 52ch;
+  }
+
+  .category-arrow {
+    grid-area: arrow;
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-soft);
+    transition:
+      transform var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard);
+  }
+
+  .category-row:hover .category-arrow {
+    transform: translateX(6px);
+    color: var(--color-violet);
+  }
+</style>

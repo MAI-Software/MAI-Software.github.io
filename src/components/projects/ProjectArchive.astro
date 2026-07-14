@@ -1,0 +1,125 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../data/company';
+import type { CategoryId } from '../../data/categories';
+import { categories } from '../../data/categories';
+import { useTranslations, projectsPath } from '../../i18n/utils';
+import ProjectPreview from './ProjectPreview.astro';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  intro: string;
+  projects: CollectionEntry<'projects'>[];
+  /** Filtro activo; undefined = "Todos". */
+  activeCategory?: CategoryId;
+}
+
+const { locale, title, intro, projects, activeCategory } = Astro.props;
+const t = useTranslations(locale);
+
+const filters = [
+  { label: t('projects.filter.all'), href: projectsPath(locale), active: !activeCategory },
+  ...categories.map((cat) => ({
+    label: cat.label[locale],
+    href: cat.path[locale],
+    active: activeCategory === cat.id,
+  })),
+];
+---
+
+<section class="section archive">
+  <div class="container">
+    <header class="archive-head">
+      <h1>{title}</h1>
+      <p class="lead">{intro}</p>
+
+      <nav class="archive-filters" aria-label={t('projects.filter.all')}>
+        {
+          filters.map((f) => (
+            <a
+              href={f.href}
+              class:list={['filter-pill', { active: f.active }]}
+              aria-current={f.active ? 'page' : undefined}
+            >
+              {f.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    {
+      projects.length > 0 ? (
+        <div class="archive-list">
+          {projects.map((project) => (
+            <ProjectPreview project={project} locale={locale} headingLevel="h2" />
+          ))}
+        </div>
+      ) : (
+        <p class="archive-empty">{t('projects.empty')}</p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .archive-head {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    margin-bottom: clamp(var(--space-7), 8vw, var(--space-9));
+  }
+
+  .archive-head h1 {
+    font-size: clamp(var(--font-size-4xl), 5vw, var(--font-size-5xl));
+  }
+
+  .archive-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition:
+      color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard),
+      background-color var(--duration-base) var(--ease-standard);
+  }
+
+  .filter-pill:hover {
+    color: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+  }
+
+  .filter-pill.active {
+    background: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+    color: var(--color-white);
+  }
+
+  .archive-list {
+    display: grid;
+    gap: clamp(var(--space-8), 8vw, var(--space-9));
+  }
+
+  .archive-empty {
+    color: var(--color-text-muted);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-7);
+  }
+</style>

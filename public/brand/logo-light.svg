@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" role="img" aria-label="MAI">
+  <!-- Versión para fondo oscuro: letras blancas, acentos de marca intactos -->
+  <defs>
+    <linearGradient id="mai-ml" x1="90" y1="30" x2="145" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#10C8FC"/>
+      <stop offset="0.55" stop-color="#3882FB"/>
+      <stop offset="1" stop-color="#6242FC"/>
+    </linearGradient>
+    <linearGradient id="mai-al" x1="380" y1="114" x2="380" y2="184" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6242FC"/>
+      <stop offset="1" stop-color="#3882FB"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <!-- M -->
+    <polygon fill="#FFFFFF" points="20,30 58,30 58,190 20,190"/>
+    <polygon fill="url(#mai-ml)" points="58,30 96,30 159,190 121,190"/>
+    <polygon fill="#FFFFFF" points="184,30 222,30 159,190 121,190"/>
+    <polygon fill="#FFFFFF" points="222,30 260,30 260,190 222,190"/>
+    <!-- A -->
+    <path fill="#FFFFFF" fill-rule="evenodd" d="M380 30 L460 190 L300 190 Z M380 92 L429 190 L331 190 Z"/>
+    <polygon fill="url(#mai-al)" points="380,114 415,184 345,184"/>
+    <!-- I -->
+    <polygon fill="#10C8FC" points="500,30 538,30 538,58 500,86"/>
+    <polygon fill="#FFFFFF" points="500,96 538,68 538,190 500,190"/>
+  </g>
+</svg>

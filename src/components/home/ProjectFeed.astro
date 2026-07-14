@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../data/company';
+import { useTranslations, projectsPath } from '../../i18n/utils';
+import ProjectPreview from '../projects/ProjectPreview.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  locale: Locale;
+}
+
+const { projects, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="feed-head">
+      <h2>{t('feed.title')}</h2>
+      <a href={projectsPath(locale)} class="link-editorial">{t('feed.all')}</a>
+    </div>
+
+    <div class="feed-list">
+      {projects.map((project) => <ProjectPreview project={project} locale={locale} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feed-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-7);
+  }
+
+  .feed-list {
+    display: grid;
+    gap: clamp(var(--space-8), 8vw, var(--space-9));
+  }
+</style>

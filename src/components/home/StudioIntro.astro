@@ -1,0 +1,39 @@
+---
+import type { Locale } from '../../data/company';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const studioHref = locale === 'es' ? '/estudio' : '/en/studio';
+---
+
+<section class="section studio-section">
+  <div class="container studio-inner">
+    <span class="brand-rule" aria-hidden="true"></span>
+    <h2>{t('studio.title')}</h2>
+    <p class="lead">{t('studio.text')}</p>
+    <a href={studioHref} class="link-editorial">{t('studio.link')}</a>
+  </div>
+</section>
+
+<style>
+  .studio-section {
+    background: var(--color-surface-soft);
+    border-block: 1px solid var(--color-border-soft);
+  }
+
+  .studio-inner {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    max-width: calc(var(--container-reading) + 8rem);
+  }
+
+  .studio-inner h2 {
+    max-width: 20ch;
+  }
+</style>

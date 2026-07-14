@@ -1,0 +1,72 @@
+/* ============================================
+   MAI Softwares — Tipografía
+   Display: Space Grotesk · Body: Inter
+   ============================================ */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-ink-900);
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(var(--font-size-4xl), 6.5vw, var(--font-size-6xl));
+}
+
+h2 {
+  font-size: clamp(var(--font-size-3xl), 4vw, var(--font-size-4xl));
+}
+
+h3 {
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+}
+
+p {
+  max-width: 65ch;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-violet);
+}
+
+.lead {
+  font-size: clamp(var(--font-size-lg), 2vw, var(--font-size-xl));
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Número de sección editorial */
+.section-number {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-soft);
+  letter-spacing: 0.1em;
+}
+
+/* Texto sobre fondos oscuros */
+.on-dark h1,
+.on-dark h2,
+.on-dark h3 {
+  color: var(--color-white);
+}
+
+.on-dark p {
+  color: rgba(255, 255, 255, 0.78);
+}

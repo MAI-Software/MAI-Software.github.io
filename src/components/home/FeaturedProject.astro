@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../data/company';
+import { useTranslations } from '../../i18n/utils';
+import ProjectPreview from '../projects/ProjectPreview.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="section featured-section">
+  <div class="container">
+    <p class="eyebrow featured-label">{t('featured.label')}</p>
+    <ProjectPreview project={project} locale={locale} variant="featured" headingLevel="h2" />
+  </div>
+</section>
+
+<style>
+  .featured-section {
+    background: var(--color-surface-soft);
+    border-block: 1px solid var(--color-border-soft);
+  }
+
+  .featured-label {
+    margin-bottom: var(--space-6);
+  }
+</style>

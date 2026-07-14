@@ -1,17 +1,33 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import CategoryIndex from '../components/home/CategoryIndex.astro';
+import FeaturedProject from '../components/home/FeaturedProject.astro';
+import ProjectFeed from '../components/home/ProjectFeed.astro';
+import Process from '../components/home/Process.astro';
+import StudioIntro from '../components/home/StudioIntro.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
+import { company } from '../data/company';
+import { getProjects, getFeaturedProject } from '../lib/projects';
 
+const locale = 'es';
+const featured = await getFeaturedProject(locale);
+const projects = (await getProjects(locale)).filter(
+  (p) => p.data.slug !== featured?.data.slug,
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  locale={locale}
+  title={`${company.name} — ${company.tagline.es}`}
+  description={company.description.es}
+  alternatePath="/en/"
+>
+  <Hero locale={locale} />
+  <CategoryIndex locale={locale} />
+  {featured && <FeaturedProject project={featured} locale={locale} />}
+  {projects.length > 0 && <ProjectFeed projects={projects} locale={locale} />}
+  <Process locale={locale} />
+  <StudioIntro locale={locale} />
+  <FinalCTA locale={locale} />
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+import type { Locale } from '../../data/company';
+import { useTranslations, projectsPath, contactPath } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="hero tech-grid-bg">
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">{t('hero.eyebrow')}</p>
+      <h1>{t('hero.title')}</h1>
+      <p class="lead">{t('hero.text')}</p>
+      <div class="hero-actions">
+        <a href={projectsPath(locale)} class="btn btn-primary">{t('cta.explore')}</a>
+        <a href={contactPath(locale)} class="btn btn-secondary">{t('cta.talk')}</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <!-- Geometría derivada del logo: diagonales M·A·I -->
+      <svg viewBox="0 0 400 400" width="380" height="380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hero-grad" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#6242FC"></stop>
+            <stop offset="0.52" stop-color="#3882FB"></stop>
+            <stop offset="1" stop-color="#10C8FC"></stop>
+          </linearGradient>
+        </defs>
+        <polygon points="60,340 150,60 190,60 100,340" fill="#10192D"></polygon>
+        <polygon points="150,340 240,60 280,60 190,340" fill="url(#hero-grad)"></polygon>
+        <polygon points="240,340 330,60 370,60 280,340" fill="#17233A"></polygon>
+        <rect x="60" y="352" width="310" height="6" rx="3" fill="url(#hero-grad)"></rect>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--space-8), 12vw, var(--space-10));
+    border-bottom: 1px solid var(--color-border-soft);
+    overflow: clip;
+  }
+
+  .hero-inner {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .hero-copy h1 {
+    max-width: 18ch;
+  }
+
+  .hero-copy .lead {
+    max-width: 52ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    }
+
+    .hero-visual {
+      display: block;
+      max-width: 380px;
+      justify-self: end;
+    }
+  }
+</style>

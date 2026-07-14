@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FinalCTA from '../../components/home/FinalCTA.astro';
+import { company } from '../../data/company';
+import { categories } from '../../data/categories';
+import { useTranslations } from '../../i18n/utils';
+
+const locale = 'en';
+const t = useTranslations(locale);
+
+const principles = [
+  t('studio.principle.1'),
+  t('studio.principle.2'),
+  t('studio.principle.3'),
+  t('studio.principle.4'),
+  t('studio.principle.5'),
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t('studio.page.title')} — ${company.name}`}
+  description={t('studio.page.intro')}
+  alternatePath="/estudio"
+>
+  <section class="section">
+    <div class="container studio-page">
+      <header class="studio-head">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <h1>{t('studio.page.title')}</h1>
+        <p class="lead">{t('studio.page.intro')}</p>
+      </header>
+
+      <div class="studio-block">
+        <h2>{t('studio.areas.title')}</h2>
+        <ul class="areas-list">
+          {
+            categories.map((cat) => (
+              <li>
+                <a href={cat.path[locale]}>
+                  <span class="section-number">{cat.number}</span>
+                  <span class="area-name">{cat.label[locale]}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="studio-block">
+        <h2>{t('studio.principles.title')}</h2>
+        <ol class="principles-list">
+          {principles.map((p) => <li>{p}</li>)}
+        </ol>
+      </div>
+
+      <div class="studio-block">
+        <h2>{t('studio.tech.title')}</h2>
+        <p>{t('studio.tech.text')}</p>
+      </div>
+    </div>
+  </section>
+  <FinalCTA locale={locale} />
+</BaseLayout>
+
+<style>
+  .studio-page {
+    display: grid;
+    gap: clamp(var(--space-7), 6vw, var(--space-9));
+  }
+
+  .studio-head {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .studio-head h1 {
+    font-size: clamp(var(--font-size-4xl), 5vw, var(--font-size-5xl));
+  }
+
+  .studio-block {
+    display: grid;
+    gap: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+
+  .studio-block p {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+  }
+
+  .areas-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .areas-list a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    text-decoration: none;
+  }
+
+  .area-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
+    color: var(--color-ink-900);
+    transition: color var(--duration-base) var(--ease-standard);
+  }
+
+  .areas-list a:hover .area-name {
+    color: var(--color-violet);
+  }
+
+  .principles-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    counter-reset: principle;
+  }
+
+  .principles-list li {
+    counter-increment: principle;
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--font-size-lg);
+    color: var(--color-ink-900);
+  }
+
+  .principles-list li::before {
+    content: counter(principle, decimal-leading-zero);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-soft);
+    padding-top: 4px;
+  }
+</style>

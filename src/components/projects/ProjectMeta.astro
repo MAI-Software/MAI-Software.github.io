@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../data/company';
+import { getCategory } from '../../data/categories';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = useTranslations(locale);
+const data = project.data;
+const category = getCategory(data.category);
+
+const rows: { label: string; value: string }[] = [
+  { label: t('projects.category'), value: category.label[locale] },
+  { label: t('projects.year'), value: String(data.year) },
+  { label: t('projects.status'), value: data.status },
+];
+---
+
+<dl class="project-meta">
+  {
+    rows.map((row) => (
+      <div class="meta-row">
+        <dt>{row.label}</dt>
+        <dd>{row.value}</dd>
+      </div>
+    ))
+  }
+  {
+    data.technologies.length > 0 && (
+      <div class="meta-row">
+        <dt>{t('projects.tech')}</dt>
+        <dd>{data.technologies.join(' · ')}</dd>
+      </div>
+    )
+  }
+  {
+    data.services.length > 0 && (
+      <div class="meta-row">
+        <dt>{t('projects.services')}</dt>
+        <dd>{data.services.join(' · ')}</dd>
+      </div>
+    )
+  }
+</dl>
+
+<style>
+  .project-meta {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-soft);
+  }
+
+  .meta-row {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  dt {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-ink-900);
+  }
+
+  @media (min-width: 600px) {
+    .project-meta {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-5);
+    }
+  }
+</style>

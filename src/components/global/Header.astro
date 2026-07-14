@@ -1,0 +1,265 @@
+---
+import { company, type Locale } from '../../data/company';
+import { mainNav } from '../../data/navigation';
+import { useTranslations, homePath, contactPath } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  alternatePath?: string;
+}
+
+const { locale, alternatePath } = Astro.props;
+const t = useTranslations(locale);
+const altLocale: Locale = locale === 'es' ? 'en' : 'es';
+const langHref = alternatePath ?? homePath(altLocale);
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={homePath(locale)} class="logo-link" aria-label={company.name}>
+      <img src="/brand/logo.svg" alt="" width="81" height="32" />
+      <span class="visually-hidden">{company.name}</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label={t('nav.menu')}>
+      <ul>
+        {
+          mainNav.map((item) => {
+            const href = item.href[locale];
+            const active = currentPath === href;
+            return (
+              <li>
+                <a href={href} aria-current={active ? 'page' : undefined}>
+                  {item.label[locale]}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href={langHref} class="lang-switch" aria-label={t('lang.switch')}>
+        {t('lang.label')}
+      </a>
+      <a href={contactPath(locale)} class="btn btn-primary header-cta">
+        {t('cta.contact')}
+      </a>
+      <button
+        type="button"
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="menu-toggle-label">{t('nav.menu')}</span>
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-menu" class="nav-mobile" aria-label={t('nav.menu')} hidden>
+    <ul>
+      {
+        mainNav.map((item) => (
+          <li>
+            <a href={item.href[locale]}>{item.label[locale]}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={contactPath(locale)} class="btn btn-primary mobile-menu-cta">
+      {t('cta.talk')}
+    </a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+    document.body.classList.toggle('menu-open', !open);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: 64px;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-desktop a {
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+    transition:
+      color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .nav-desktop a:hover {
+    color: var(--color-violet);
+  }
+
+  .nav-desktop a[aria-current='page'] {
+    border-bottom-color: var(--color-violet);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .lang-switch {
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    line-height: 1;
+    transition:
+      color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .lang-switch:hover {
+    color: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+  }
+
+  .header-cta {
+    min-height: 40px;
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--font-size-sm);
+  }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-ink-900);
+  }
+
+  .menu-toggle-icon,
+  .menu-toggle-icon::before,
+  .menu-toggle-icon::after {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    border-radius: var(--radius-pill);
+  }
+
+  .menu-toggle-icon {
+    position: relative;
+  }
+
+  .menu-toggle-icon::before,
+  .menu-toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .menu-toggle-icon::before {
+    top: -5px;
+  }
+
+  .menu-toggle-icon::after {
+    top: 5px;
+  }
+
+  .nav-mobile {
+    border-top: 1px solid var(--color-border-soft);
+    background: var(--color-surface);
+    padding: var(--space-5) clamp(1.25rem, 4vw, 4rem) var(--space-6);
+  }
+
+  .nav-mobile ul {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .nav-mobile a:not(.btn) {
+    display: block;
+    padding: var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-ink-900);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .mobile-menu-cta {
+    width: 100%;
+  }
+
+  @media (max-width: 899px) {
+    .nav-desktop,
+    .header-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .nav-mobile {
+      display: none;
+    }
+  }
+</style>

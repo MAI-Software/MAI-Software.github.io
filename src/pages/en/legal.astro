@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { company } from '../../data/company';
+import { useTranslations } from '../../i18n/utils';
+
+const locale = 'en';
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t('legal.title')} — ${company.name}`}
+  description={t('legal.pending')}
+  alternatePath="/legal"
+>
+  <section class="section">
+    <div class="container">
+      <div class="container-reading legal-page">
+        <h1>{t('legal.title')}</h1>
+        <p>{t('legal.pending')}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    display: grid;
+    gap: var(--space-5);
+    min-height: 40vh;
+  }
+
+  .legal-page p {
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,43 +1,32 @@
-# Astro Starter Kit: Minimal
+# MAI Softwares — Web corporativa
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Web corporativa y portfolio editorial de **MAI Softwares**: videojuegos, SaaS y experiencias web.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Stack: **Astro + TypeScript + CSS** (estático, sin backend)
+- Idiomas: **ES** (por defecto, `/`) y **EN** (`/en/`)
+- Despliegue objetivo: **Cloudflare Pages** (build: `npm run build`, output: `dist/`)
 
-## 🚀 Project Structure
+## Comandos
 
-Inside of your Astro project, you'll see the following folders and files:
+| Comando           | Acción                                    |
+| ----------------- | ----------------------------------------- |
+| `npm install`     | Instala dependencias                      |
+| `npm run dev`     | Servidor de desarrollo en `localhost:4321`|
+| `npm run build`   | Build de producción en `./dist/`          |
+| `npm run preview` | Previsualiza el build                     |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Añadir un nuevo proyecto
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+1. Crea `src/content/projects/es/mi-proyecto.md` y `src/content/projects/en/mi-proyecto.md` (mismo `slug` en ambos).
+2. Añade `public/projects/mi-proyecto/cover.webp` (16:10) y capturas opcionales.
+3. Completa el frontmatter (categoría: `game` | `saas` | `web`; variante: `featured` | `wide` | `split-left` | `split-right` | `compact` | `editorial`).
+4. `npm run build` y publica.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+**No hace falta tocar ningún componente.**
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Pendiente de contenido real
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Email de contacto y redes en `src/data/company.ts`.
+- Dominio definitivo en `astro.config.mjs` y `public/robots.txt`.
+- Datos legales cuando exista constitución (`/legal`).
+- Sustituir los 3 proyectos de ejemplo por proyectos reales.

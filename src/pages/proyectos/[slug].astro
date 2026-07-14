@@ -1,0 +1,196 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectMeta from '../../components/projects/ProjectMeta.astro';
+import ProjectGallery from '../../components/projects/ProjectGallery.astro';
+import ProjectNavigation from '../../components/projects/ProjectNavigation.astro';
+import { company } from '../../data/company';
+import { getCategory } from '../../data/categories';
+import { useTranslations, projectsPath, contactPath } from '../../i18n/utils';
+import { getProjects, getProjectNeighbors } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('es');
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const locale = 'es';
+const t = useTranslations(locale);
+const { project } = Astro.props;
+const data = project.data;
+const category = getCategory(data.category);
+const { Content } = await render(project);
+const { prev, next } = await getProjectNeighbors(locale, data.slug);
+---
+
+<BaseLayout
+  locale={locale}
+  title={data.seoTitle || `${data.title} — ${company.name}`}
+  description={data.seoDescription || data.excerpt}
+  alternatePath={`/en/projects/${data.slug}`}
+  ogImage={data.cover}
+>
+  <article class="section project-page">
+    <div class="container">
+      <header class="project-head">
+        <a href={projectsPath(locale)} class="link-editorial back-link">
+          {t('projects.back')}
+        </a>
+        <p class="eyebrow">{category.label[locale]}</p>
+        <h1>{data.title}</h1>
+        <p class="lead">{data.excerpt}</p>
+        {data.example && <p class="badge badge-example">{t('projects.example')}</p>}
+      </header>
+
+      <img
+        src={data.cover}
+        alt={data.coverAlt}
+        width="1280"
+        height="800"
+        class="project-cover"
+      />
+
+      <div class="project-layout">
+        <div class="project-content">
+          <Content />
+          <ProjectGallery images={data.gallery} altBase={data.coverAlt} />
+        </div>
+
+        <aside class="project-aside">
+          <ProjectMeta project={project} locale={locale} />
+          {
+            data.demoUrl && (
+              <a
+                href={data.demoUrl}
+                class="btn btn-primary demo-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t('cta.openDemo')} ↗
+              </a>
+            )
+          }
+          {
+            data.repositoryUrl && (
+              <a
+                href={data.repositoryUrl}
+                class="btn btn-secondary demo-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub ↗
+              </a>
+            )
+          }
+        </aside>
+      </div>
+
+      <ProjectNavigation prev={prev} next={next} locale={locale} />
+
+      <div class="project-contact">
+        <h2>{t('final.title')}</h2>
+        <a href={contactPath(locale)} class="btn btn-primary">{t('cta.contact')}</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-head {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    margin-bottom: var(--space-7);
+    max-width: 56rem;
+  }
+
+  .back-link {
+    margin-bottom: var(--space-4);
+  }
+
+  .back-link::after {
+    content: none;
+  }
+
+  .back-link::before {
+    content: '←';
+    margin-right: var(--space-2);
+  }
+
+  .project-head h1 {
+    font-size: clamp(var(--font-size-4xl), 5.5vw, var(--font-size-5xl));
+  }
+
+  .project-cover {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-soft);
+    background: var(--color-surface-soft);
+    box-shadow: var(--shadow-md);
+    margin-bottom: clamp(var(--space-7), 6vw, var(--space-9));
+  }
+
+  .project-layout {
+    display: grid;
+    gap: var(--space-7);
+    margin-bottom: clamp(var(--space-7), 6vw, var(--space-9));
+  }
+
+  .project-content {
+    display: grid;
+    gap: var(--space-6);
+    max-width: var(--container-reading);
+  }
+
+  .project-content :global(h2) {
+    font-size: var(--font-size-2xl);
+    margin-top: var(--space-4);
+  }
+
+  .project-content :global(p) {
+    color: var(--color-text-muted);
+  }
+
+  .project-aside {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .demo-btn {
+    width: 100%;
+  }
+
+  .project-contact {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    margin-top: clamp(var(--space-8), 8vw, var(--space-9));
+    padding: clamp(var(--space-6), 5vw, var(--space-8));
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-border-soft);
+  }
+
+  .project-contact h2 {
+    max-width: 24ch;
+    font-size: clamp(var(--font-size-2xl), 3vw, var(--font-size-3xl));
+  }
+
+  @media (min-width: 900px) {
+    .project-layout {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      align-items: start;
+    }
+
+    .project-aside {
+      position: sticky;
+      top: calc(64px + var(--space-5));
+    }
+  }
+</style>

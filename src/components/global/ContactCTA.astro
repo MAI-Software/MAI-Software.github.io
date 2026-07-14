@@ -1,0 +1,52 @@
+---
+import type { Locale } from '../../data/company';
+import { useTranslations, contactPath } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<a href={contactPath(locale)} class="mobile-cta">
+  {t('cta.contact')}
+</a>
+
+<style>
+  /* CTA móvil compacto (spec §17, opción 1): no tapa contenido crítico,
+     desaparece en escritorio y cuando el menú está abierto. */
+  .mobile-cta {
+    position: fixed;
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+    z-index: var(--z-overlay);
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-ink-900);
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-cta:active {
+    background: var(--color-violet);
+  }
+
+  :global(body.menu-open) .mobile-cta {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .mobile-cta {
+      display: none;
+    }
+  }
+</style>

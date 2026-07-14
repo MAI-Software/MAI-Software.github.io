@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/home/Hero.astro';
+import CategoryIndex from '../../components/home/CategoryIndex.astro';
+import FeaturedProject from '../../components/home/FeaturedProject.astro';
+import ProjectFeed from '../../components/home/ProjectFeed.astro';
+import Process from '../../components/home/Process.astro';
+import StudioIntro from '../../components/home/StudioIntro.astro';
+import FinalCTA from '../../components/home/FinalCTA.astro';
+import { company } from '../../data/company';
+import { getProjects, getFeaturedProject } from '../../lib/projects';
+
+const locale = 'en';
+const featured = await getFeaturedProject(locale);
+const projects = (await getProjects(locale)).filter(
+  (p) => p.data.slug !== featured?.data.slug,
+);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${company.name} — ${company.tagline.en}`}
+  description={company.description.en}
+  alternatePath="/"
+>
+  <Hero locale={locale} />
+  <CategoryIndex locale={locale} />
+  {featured && <FeaturedProject project={featured} locale={locale} />}
+  {projects.length > 0 && <ProjectFeed projects={projects} locale={locale} />}
+  <Process locale={locale} />
+  <StudioIntro locale={locale} />
+  <FinalCTA locale={locale} />
+</BaseLayout>
