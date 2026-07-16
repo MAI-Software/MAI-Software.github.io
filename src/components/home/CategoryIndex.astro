@@ -28,7 +28,6 @@ const bulletKeys = (id: string): UIKey[] =>
           <li class="card category-card" data-tilt>
             <span class="card-chip">{cat.number}</span>
             <h3>{cat.label[locale]}</h3>
-            <p class="category-desc">{cat.description[locale]}</p>
             <ul class="card-bullets">
               {bulletKeys(cat.id).map((key) => (
                 <li>{t(key)}</li>

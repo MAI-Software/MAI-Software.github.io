@@ -16,7 +16,7 @@ export const ui = {
     'hero.title':
       'Convertimos ideas digitales en productos que se pueden ver, usar y recordar.',
     'hero.text':
-      'Diseñamos y desarrollamos videojuegos, herramientas SaaS y experiencias web con una visión común: crear productos claros, sólidos y preparados para crecer.',
+      'Videojuegos, herramientas SaaS y experiencias web. Productos claros, sólidos y preparados para crecer.',
     'cta.explore': 'Explorar proyectos',
     'cta.talk': 'Hablemos de tu proyecto',
     'cta.contact': 'Hablemos',
@@ -129,7 +129,7 @@ export const ui = {
     'hero.title':
       'We turn digital ideas into products you can see, use and remember.',
     'hero.text':
-      'We design and build video games, SaaS tools and web experiences with one shared vision: creating clear, solid products that are ready to grow.',
+      'Video games, SaaS tools and web experiences. Clear, solid products built to grow.',
     'cta.explore': 'Explore projects',
     'cta.talk': "Let's talk about your project",
     'cta.contact': "Let's talk",

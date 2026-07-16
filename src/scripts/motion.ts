@@ -74,43 +74,65 @@ window.addEventListener('scroll', requestUpdate, { passive: true });
 window.addEventListener('resize', requestUpdate, { passive: true });
 update();
 
-/* --- Parallax de ratón (capas del hero, solo puntero fino) --- */
+/* --- Parallax de ratón (capas del hero, solo puntero fino, rAF-throttled) --- */
 if (!reduced && finePointer) {
   document.querySelectorAll<HTMLElement>('[data-mouse-parallax]').forEach((scene) => {
     const layers = Array.from(scene.querySelectorAll<HTMLElement>('[data-mouse-depth]'));
     if (layers.length === 0) return;
 
+    let pending = false;
+    let lastEv: PointerEvent | null = null;
+
     scene.addEventListener('pointermove', (ev) => {
-      const rect = scene.getBoundingClientRect();
-      const nx = (ev.clientX - rect.left) / rect.width - 0.5;
-      const ny = (ev.clientY - rect.top) / rect.height - 0.5;
-      for (const layer of layers) {
-        const depth = Number.parseFloat(layer.dataset.mouseDepth ?? '10');
-        layer.style.translate = `${(-nx * depth).toFixed(1)}px ${(-ny * depth).toFixed(1)}px`;
-      }
+      lastEv = ev;
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        if (!lastEv) return;
+        const rect = scene.getBoundingClientRect();
+        const nx = (lastEv.clientX - rect.left) / rect.width - 0.5;
+        const ny = (lastEv.clientY - rect.top) / rect.height - 0.5;
+        for (const layer of layers) {
+          const depth = Number.parseFloat(layer.dataset.mouseDepth ?? '10');
+          layer.style.translate = `${(-nx * depth).toFixed(1)}px ${(-ny * depth).toFixed(1)}px`;
+        }
+      });
     });
 
     scene.addEventListener('pointerleave', () => {
+      lastEv = null;
       for (const layer of layers) layer.style.translate = '0px 0px';
     });
   });
 }
 
-/* --- Tilt 3D en tarjetas (solo puntero fino) --- */
+/* --- Tilt 3D en tarjetas (solo puntero fino, rAF-throttled) --- */
 if (!reduced && finePointer) {
   const MAX_DEG = 5;
   document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+    let pending = false;
+    let lastEv: PointerEvent | null = null;
+
     card.addEventListener('pointermove', (ev) => {
-      const rect = card.getBoundingClientRect();
-      const nx = (ev.clientX - rect.left) / rect.width - 0.5;
-      const ny = (ev.clientY - rect.top) / rect.height - 0.5;
-      card.classList.add('is-tilting');
-      card.style.setProperty('--tilt-x', `${(-ny * MAX_DEG).toFixed(2)}deg`);
-      card.style.setProperty('--tilt-y', `${(nx * MAX_DEG).toFixed(2)}deg`);
-      card.style.setProperty('--tilt-lift', '-4px');
+      lastEv = ev;
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        if (!lastEv) return;
+        const rect = card.getBoundingClientRect();
+        const nx = (lastEv.clientX - rect.left) / rect.width - 0.5;
+        const ny = (lastEv.clientY - rect.top) / rect.height - 0.5;
+        card.classList.add('is-tilting');
+        card.style.setProperty('--tilt-x', `${(-ny * MAX_DEG).toFixed(2)}deg`);
+        card.style.setProperty('--tilt-y', `${(nx * MAX_DEG).toFixed(2)}deg`);
+        card.style.setProperty('--tilt-lift', '-4px');
+      });
     });
 
     card.addEventListener('pointerleave', () => {
+      lastEv = null;
       card.classList.remove('is-tilting');
       card.style.setProperty('--tilt-x', '0deg');
       card.style.setProperty('--tilt-y', '0deg');

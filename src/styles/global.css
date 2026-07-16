@@ -406,13 +406,20 @@ button {
   width: 480px;
   height: 480px;
   border-radius: 50%;
+  /* Sin filter: el propio radial ya es suave y blur repinta caro con parallax */
   background: radial-gradient(
     circle,
     rgba(56, 130, 251, 0.14),
     rgba(98, 66, 252, 0.08) 55%,
     transparent 72%
   );
-  filter: blur(2px);
+}
+
+/* En móvil las capas decorativas no aportan y cuestan pintura */
+@media (max-width: 767px) {
+  .deco {
+    display: none;
+  }
 }
 
 .deco-diagonal {

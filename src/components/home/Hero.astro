@@ -34,21 +34,15 @@ const titleEnd = title.slice(lastSpace + 1);
     </div>
 
     <div class="hero-visual" data-parallax="0.07" aria-hidden="true">
-      <div data-mouse-depth="18">
-        <!-- Geometría derivada del logo: diagonales M·A·I -->
-        <svg viewBox="0 0 400 400" width="380" height="380" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="hero-grad" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#6242FC"></stop>
-              <stop offset="0.52" stop-color="#3882FB"></stop>
-              <stop offset="1" stop-color="#10C8FC"></stop>
-            </linearGradient>
-          </defs>
-          <polygon points="60,340 150,60 190,60 100,340" fill="#FFFFFF" opacity="0.92"></polygon>
-          <polygon points="150,340 240,60 280,60 190,340" fill="url(#hero-grad)"></polygon>
-          <polygon points="240,340 330,60 370,60 280,340" fill="#17233A" stroke="rgba(255,255,255,0.25)"></polygon>
-          <rect x="60" y="352" width="310" height="6" rx="3" fill="url(#hero-grad)"></rect>
-        </svg>
+      <div class="hero-logo-panel" data-mouse-depth="18">
+        <img
+          src="/brand/logo.webp"
+          alt=""
+          width="320"
+          height="129"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
     </div>
   </div>
@@ -117,13 +111,20 @@ const titleEnd = title.slice(lastSpace + 1);
 
     .hero-visual {
       display: block;
-      max-width: 380px;
       justify-self: end;
-      filter: drop-shadow(0 0 60px rgba(56, 130, 251, 0.35))
-        drop-shadow(0 24px 48px rgba(0, 0, 0, 0.4));
     }
 
-    .hero-visual [data-mouse-depth] {
+    .hero-logo-panel {
+      display: grid;
+      place-items: center;
+      padding: var(--space-7) var(--space-6);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-xl);
+      /* box-shadow en vez de filter: mismo glow, mucho más barato de pintar */
+      box-shadow:
+        0 0 70px rgba(56, 130, 251, 0.3),
+        0 30px 70px rgba(0, 0, 0, 0.45);
       transition: translate 200ms var(--ease-standard);
     }
   }
