@@ -93,8 +93,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     top: 0;
     z-index: var(--z-sticky);
     background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(14px) saturate(1.1);
     border-bottom: 1px solid var(--color-border-soft);
+    transition: box-shadow var(--duration-base) var(--ease-standard);
+  }
+
+  .site-header.is-scrolled {
+    box-shadow: var(--shadow-md);
   }
 
   .header-inner {

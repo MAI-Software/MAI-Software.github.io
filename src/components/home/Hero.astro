@@ -16,70 +16,64 @@ const titleStart = title.slice(0, lastSpace);
 const titleEnd = title.slice(lastSpace + 1);
 ---
 
-<section class="hero tech-grid-bg">
-  <div class="deco deco-blob hero-blob" data-parallax="0.22" aria-hidden="true"></div>
+<section class="hero section-dark cut-bottom" data-mouse-parallax>
   <div class="deco deco-diagonal hero-diag-1" data-parallax="0.14" aria-hidden="true"></div>
   <div class="deco deco-diagonal hero-diag-2" data-parallax="0.09" aria-hidden="true"></div>
 
   <div class="container hero-inner">
     <div class="hero-copy" data-reveal-group>
-      <p class="eyebrow" data-reveal>{t('hero.eyebrow')}</p>
+      <p class="eyebrow hero-eyebrow" data-reveal>{t('hero.eyebrow')}</p>
       <h1 data-reveal>
         {titleStart}{' '}<span class="grad-text">{titleEnd}</span>
       </h1>
-      <p class="lead" data-reveal>{t('hero.text')}</p>
+      <p class="lead hero-lead" data-reveal>{t('hero.text')}</p>
       <div class="hero-actions" data-reveal>
-        <a href={projectsPath(locale)} class="btn btn-primary">{t('cta.explore')}</a>
-        <a href={contactPath(locale)} class="btn btn-secondary">{t('cta.talk')}</a>
+        <a href={projectsPath(locale)} class="btn btn-gradient">{t('cta.explore')}</a>
+        <a href={contactPath(locale)} class="btn btn-ghost-dark">{t('cta.talk')}</a>
       </div>
     </div>
 
     <div class="hero-visual" data-parallax="0.07" aria-hidden="true">
-      <!-- Geometría derivada del logo: diagonales M·A·I -->
-      <svg viewBox="0 0 400 400" width="380" height="380" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hero-grad" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#6242FC"></stop>
-            <stop offset="0.52" stop-color="#3882FB"></stop>
-            <stop offset="1" stop-color="#10C8FC"></stop>
-          </linearGradient>
-        </defs>
-        <polygon points="60,340 150,60 190,60 100,340" fill="#10192D"></polygon>
-        <polygon points="150,340 240,60 280,60 190,340" fill="url(#hero-grad)"></polygon>
-        <polygon points="240,340 330,60 370,60 280,340" fill="#17233A"></polygon>
-        <rect x="60" y="352" width="310" height="6" rx="3" fill="url(#hero-grad)"></rect>
-      </svg>
+      <div data-mouse-depth="18">
+        <!-- Geometría derivada del logo: diagonales M·A·I -->
+        <svg viewBox="0 0 400 400" width="380" height="380" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hero-grad" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#6242FC"></stop>
+              <stop offset="0.52" stop-color="#3882FB"></stop>
+              <stop offset="1" stop-color="#10C8FC"></stop>
+            </linearGradient>
+          </defs>
+          <polygon points="60,340 150,60 190,60 100,340" fill="#FFFFFF" opacity="0.92"></polygon>
+          <polygon points="150,340 240,60 280,60 190,340" fill="url(#hero-grad)"></polygon>
+          <polygon points="240,340 330,60 370,60 280,340" fill="#17233A" stroke="rgba(255,255,255,0.25)"></polygon>
+          <rect x="60" y="352" width="310" height="6" rx="3" fill="url(#hero-grad)"></rect>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    padding-block: clamp(var(--space-8), 12vw, var(--space-10));
-    border-bottom: 1px solid var(--color-border-soft);
-    overflow: clip;
-  }
-
-  .hero-blob {
-    top: -10%;
-    right: -8%;
+    padding-block: clamp(var(--space-8), 12vw, var(--space-10))
+      clamp(var(--space-9), 14vw, calc(var(--space-10) + 2rem));
+    border-bottom: none;
   }
 
   .hero-diag-1 {
     top: 18%;
     right: 30%;
+    opacity: 0.3;
   }
 
   .hero-diag-2 {
-    bottom: 12%;
+    bottom: 16%;
     left: -60px;
-    opacity: 0.12;
+    opacity: 0.2;
   }
 
   .hero-inner {
-    position: relative;
-    z-index: var(--z-raised);
     display: grid;
     gap: var(--space-7);
     align-items: center;
@@ -93,10 +87,16 @@ const titleEnd = title.slice(lastSpace + 1);
 
   .hero-copy h1 {
     max-width: 18ch;
+    color: var(--color-white);
   }
 
-  .hero-copy .lead {
+  .hero-eyebrow {
+    color: var(--color-cyan);
+  }
+
+  .hero-lead {
     max-width: 52ch;
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .hero-actions {
@@ -119,7 +119,12 @@ const titleEnd = title.slice(lastSpace + 1);
       display: block;
       max-width: 380px;
       justify-self: end;
-      filter: drop-shadow(0 24px 48px rgba(11, 18, 32, 0.18));
+      filter: drop-shadow(0 0 60px rgba(56, 130, 251, 0.35))
+        drop-shadow(0 24px 48px rgba(0, 0, 0, 0.4));
+    }
+
+    .hero-visual [data-mouse-depth] {
+      transition: translate 200ms var(--ease-standard);
     }
   }
 </style>

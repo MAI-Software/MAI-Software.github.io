@@ -12,9 +12,7 @@ import { getProjects, getFeaturedProject } from '../../lib/projects';
 
 const locale = 'en';
 const featured = await getFeaturedProject(locale);
-const projects = (await getProjects(locale)).filter(
-  (p) => p.data.slug !== featured?.data.slug,
-);
+const projects = await getProjects(locale);
 ---
 
 <BaseLayout

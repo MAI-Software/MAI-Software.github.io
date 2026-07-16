@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../../data/company';
 import { useTranslations, projectsPath } from '../../i18n/utils';
-import ProjectPreview from '../projects/ProjectPreview.astro';
+import ProjectCarousel from '../projects/ProjectCarousel.astro';
 
 interface Props {
   projects: CollectionEntry<'projects'>[];
@@ -13,7 +13,7 @@ const { projects, locale } = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<section class="section">
+<section class="section feed-section">
   <div class="container">
     <div class="feed-head" data-reveal>
       <div>
@@ -23,8 +23,8 @@ const t = useTranslations(locale);
       <a href={projectsPath(locale)} class="link-editorial">{t('feed.all')}</a>
     </div>
 
-    <div class="feed-list">
-      {projects.map((project) => <ProjectPreview project={project} locale={locale} />)}
+    <div data-reveal>
+      <ProjectCarousel projects={projects} locale={locale} label={t('feed.title')} />
     </div>
   </div>
 </section>
@@ -33,14 +33,13 @@ const t = useTranslations(locale);
   .feed-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-4);
     margin-bottom: var(--space-7);
   }
 
-  .feed-list {
-    display: grid;
-    gap: clamp(var(--space-8), 8vw, var(--space-9));
+  .feed-head .eyebrow {
+    margin-bottom: var(--space-2);
   }
 </style>

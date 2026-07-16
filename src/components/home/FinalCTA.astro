@@ -10,19 +10,17 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<section class="section final-cta on-dark">
+<section class="section final-cta section-dark cut-top on-dark">
   <div class="deco deco-blob final-blob" data-parallax="0.16" aria-hidden="true"></div>
   <div class="container final-inner" data-reveal-group>
     <h2 data-reveal>{t('final.title')}</h2>
-    <a href={contactPath(locale)} class="btn btn-inverse" data-reveal>{t('cta.contact')}</a>
+    <a href={contactPath(locale)} class="btn btn-gradient" data-reveal>{t('cta.contact')}</a>
   </div>
 </section>
 
 <style>
   .final-cta {
-    background: var(--color-surface-dark);
-    position: relative;
-    overflow: clip;
+    padding-block: clamp(var(--space-9), 12vw, calc(var(--space-10) + 2rem));
   }
 
   /* Halo de marca discreto (spec §8.2) con parallax */

@@ -38,11 +38,11 @@ const steps = [
       <h2>{t('process.title')}</h2>
     </header>
 
-    <ol class="process-grid" data-reveal-group>
+    <ol class="process-grid" data-reveal>
       {
         steps.map((step) => (
-          <li class="card process-card" data-reveal>
-            <span class="section-number">{step.number}</span>
+          <li class="card process-card" data-tilt>
+            <span class="card-chip">{step.number}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
             <ul class="card-bullets">

@@ -22,11 +22,11 @@ const bulletKeys = (id: string): UIKey[] =>
       <h2>{t('categories.title')}</h2>
     </header>
 
-    <ol class="category-grid" data-reveal-group>
+    <ol class="category-grid" data-reveal>
       {
         categories.map((cat) => (
-          <li class="card category-card" data-reveal>
-            <span class="section-number">{cat.number}</span>
+          <li class="card category-card" data-tilt>
+            <span class="card-chip">{cat.number}</span>
             <h3>{cat.label[locale]}</h3>
             <p class="category-desc">{cat.description[locale]}</p>
             <ul class="card-bullets">
